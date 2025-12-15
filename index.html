@@ -11,6 +11,7 @@
         :root {
             --primary: #3b82f6; /* Azul moderno */
             --secondary: #10b981; /* Verde éxito */
+            --danger: #ef4444; /* Rojo error */
             --accent: #f59e0b; /* Naranja/Amarillo */
             --dark: #0f172a; /* Fondo oscuro */
             --card-bg: #1e293b; /* Fondo tarjetas */
@@ -63,7 +64,7 @@
 
         /* Section Styles */
         section {
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
         }
 
         h2 {
@@ -93,6 +94,25 @@
             border-color: var(--primary);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
         }
+
+        /* Theory Styles */
+        .vs-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 768px) {
+            .vs-container { grid-template-columns: 1fr; }
+        }
+
+        .theory-card {
+            padding: 2rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-top: 4px solid transparent;
+        }
+        .rag-style { border-color: var(--secondary); }
+        .finetuning-style { border-color: var(--danger); }
 
         /* Problem vs Solution */
         .comparison {
@@ -252,30 +272,80 @@
             <div class="comparison">
                 <div class="comp-card problem">
                     <h3><i class="fas fa-exclamation-triangle"></i> El Problema: "Suciedad"</h3>
-                    [cite_start]<p>Los sistemas ERP reciben entradas manuales inconsistentes que rompen la integridad de datos[cite: 17, 18].</p>
+                    <p>Los sistemas ERP reciben entradas manuales inconsistentes que rompen la integridad de datos[cite: 18, 19].</p>
                     <ul style="margin-top: 1rem; list-style: none;">
                         <li>❌ "Ryzen 5"</li>
                         <li>❌ "AMD R5 3600"</li>
                         <li>❌ "Proc. Ryzen V"</li>
                     </ul>
-                    [cite_start]<p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Imposibilita el BI y el control de inventarios[cite: 21].</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Esto impacta negativamente en la inteligencia de negocios y control de inventarios[cite: 21].</p>
                 </div>
                 <div class="comp-card solution">
                     <h3><i class="fas fa-check-circle"></i> La Solución: RAG</h3>
-                    [cite_start]<p>Normalización basada en Recuperación Semántica (Retrieval) contra un "Cerebro" validado[cite: 22].</p>
+                    <p>Normalización basada en Recuperación Semántica (Retrieval) contra un "Cerebro" validado[cite: 23].</p>
                     <ul style="margin-top: 1rem; list-style: none;">
                         <li>✅ "AMD Ryzen 5 3600"</li>
                         <li>✅ "AMD Ryzen 5 3600"</li>
                         <li>✅ "AMD Ryzen 5 3600"</li>
                     </ul>
-                    [cite_start]<p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Recupera la etiqueta oficial sin "alucinar" datos[cite: 27].</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">El sistema mapea entradas ruidosas a una etiqueta oficial estandarizada[cite: 24].</p>
                 </div>
             </div>
         </section>
 
         <section>
-            <h2><i class="fas fa-project-diagram"></i> Arquitectura del Sistema</h2>
-            [cite_start]<p style="margin-bottom: 1.5rem;">Utilizamos <strong>Semantic Retrieval</strong> con un modelo Transformer Encoder[cite: 29, 30].</p>
+            <h2><i class="fas fa-balance-scale"></i> Teoría: ¿Por qué RAG y no Fine-Tuning?</h2>
+            <p style="margin-bottom: 2rem;">Para problemas de normalización de catálogos, la arquitectura de Recuperación (RAG) supera al re-entrenamiento (Fine-Tuning) por las siguientes razones técnicas:</p>
+
+            <div class="vs-container">
+                <div class="theory-card rag-style">
+                    <h3 style="color: var(--secondary); margin-bottom: 1rem;"><i class="fas fa-brain"></i> RAG (Elegido)</h3>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 1rem;">
+                            <strong><i class="fas fa-check"></i> Cero Alucinaciones:</strong> 
+                            El sistema no inventa nombres nuevos. Solo recupera etiquetas que existen físicamente en el Catálogo Maestro Oficial[cite: 27].
+                        </li>
+                        <li style="margin-bottom: 1rem;">
+                            <strong><i class="fas fa-check"></i> Actualización Instantánea:</strong> 
+                            Si llega un producto nuevo, solo se actualiza el archivo <code>.pkl</code> (el "Cerebro"). No se requiere re-entrenar el modelo neuronal[cite: 38, 39, 254].
+                        </li>
+                        <li>
+                            <strong><i class="fas fa-check"></i> Integridad Referencial:</strong> 
+                            Garantiza que el dato limpio coincida exactamente con lo que espera la base de datos ERP.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="theory-card finetuning-style">
+                    <h3 style="color: var(--danger); margin-bottom: 1rem;"><i class="fas fa-tools"></i> Fine-Tuning (Descartado)</h3>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 1rem;">
+                            <strong><i class="fas fa-times"></i> Riesgo Generativo:</strong> 
+                            Un modelo generativo podría crear un producto plausible pero inexistente (ej: "iPhone 16 Pro Max" antes de su lanzamiento).
+                        </li>
+                        <li style="margin-bottom: 1rem;">
+                            <strong><i class="fas fa-times"></i> Costoso de Mantener:</strong> 
+                            Añadir un solo producto requeriría re-entrenar los pesos del modelo, consumiendo tiempo y cómputo GPU.
+                        </li>
+                        <li>
+                            <strong><i class="fas fa-times"></i> Caja Negra:</strong> 
+                            Es difícil explicar por qué el modelo eligió un nombre si este está "quemado" en sus neuronas.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(59, 130, 246, 0.1); border-radius: 10px; border-left: 4px solid var(--primary);">
+                <h4><i class="fas fa-calculator"></i> El Poder de los Embeddings</h4>
+                <p style="font-size: 0.95rem; margin-top: 0.5rem;">
+                    El motor del sistema es un <strong>Transformer Encoder</strong> que convierte texto en vectores matemáticos densos de 768 dimensiones[cite: 30]. Esto permite entender identidad semántica más allá de las palabras clave. Por ejemplo, el modelo sabe que <em>"Gaseosa 3L"</em> y <em>"Refresco 3 Litros"</em> son semánticamente idénticos, aunque no compartan todas las letras[cite: 32].
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2><i class="fas fa-project-diagram"></i> Arquitectura del Flujo de Datos</h2>
+            <p style="margin-bottom: 1.5rem;">Implementación del pipeline de recuperación utilizando sentence-transformers.</p>
             
             <div class="flow-container">
                 <div class="flow-step">
@@ -287,19 +357,19 @@
                 <div class="flow-step">
                     <div class="flow-icon"><i class="fas fa-network-wired"></i></div>
                     <strong>2. Transformer</strong>
-                    <p style="font-size:0.8rem">Encoding a Vector</p>
+                    <p style="font-size:0.8rem">Encoding a Vector [cite: 43]</p>
                 </div>
                 <div class="arrow"><i class="fas fa-arrow-right"></i></div>
                 <div class="flow-step">
                     <div class="flow-icon"><i class="fas fa-brain"></i></div>
                     <strong>3. Cerebro PKL</strong>
-                    <p style="font-size:0.8rem">Búsqueda Vectorial</p>
+                    <p style="font-size:0.8rem">Vectores Oficiales [cite: 44]</p>
                 </div>
                 <div class="arrow"><i class="fas fa-arrow-right"></i></div>
                 <div class="flow-step">
                     <div class="flow-icon"><i class="fas fa-search"></i></div>
                     <strong>4. Similitud</strong>
-                    <p style="font-size:0.8rem">Comparación Coseno</p>
+                    <p style="font-size:0.8rem">Coseno Match [cite: 47]</p>
                 </div>
                 <div class="arrow"><i class="fas fa-arrow-right"></i></div>
                 <div class="flow-step">
@@ -316,24 +386,24 @@
                 <div class="card metric">
                     <div class="metric-value">94%</div>
                     <div class="metric-label">Precisión (Accuracy)</div>
-                    [cite_start]<p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">En identificación de variantes[cite: 175].</p>
+                    <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">En identificación de variantes con umbral de 0.75[cite: 175].</p>
                 </div>
                 <div class="card metric">
                     <div class="metric-value">4.5s</div>
                     <div class="metric-label">Velocidad</div>
-                    [cite_start]<p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Por cada 1,000 registros procesados[cite: 179].</p>
+                    <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Tiempo de procesamiento por cada 1,000 registros[cite: 179].</p>
                 </div>
                 <div class="card metric">
                     <div class="metric-value">0.75</div>
                     <div class="metric-label">Umbral Óptimo</div>
-                    [cite_start]<p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Balance ideal entre precisión y falsos positivos[cite: 172].</p>
+                    <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Balance ideal para evitar falsos positivos[cite: 173].</p>
                 </div>
             </div>
         </section>
 
         <section>
             <h2><i class="fas fa-laptop-code"></i> Demostración del Algoritmo</h2>
-            [cite_start]<p style="margin-bottom: 1rem;">Prueba la lógica de normalización basada en los ejemplos del documento[cite: 47, 61].</p>
+            <p style="margin-bottom: 1rem;">Prueba la lógica de normalización basada en los ejemplos del documento.</p>
             
             <div class="demo-box">
                 <div class="input-group">
@@ -344,7 +414,7 @@
                     <span style="color: #64748b;">Esperando input...</span>
                 </div>
                 <div style="margin-top: 1rem; font-size: 0.8rem; color: #64748b;">
-                    [cite_start]<i class="fas fa-info-circle"></i> Modelo: sentence-transformers/paraphrase-multilingual-mpnet-base-v2 [cite: 31]
+                    <i class="fas fa-info-circle"></i> Modelo: sentence-transformers/paraphrase-multilingual-mpnet-base-v2
                 </div>
             </div>
         </section>
@@ -354,15 +424,15 @@
             <div class="grid">
                 <div class="card">
                     <h4><i class="fab fa-python"></i> Core</h4>
-                    [cite_start]<p>Python 3.9+ priorizando eficiencia de memoria[cite: 74, 76].</p>
+                    <p>Python 3.9+ priorizando eficiencia de memoria y Lazy Loading[cite: 76, 82].</p>
                 </div>
                 <div class="card">
                     <h4><i class="fas fa-database"></i> Serialización</h4>
-                    [cite_start]<p>Uso de <code>pickle</code> para almacenamiento binario de vectores pre-calculados (Cerebro)[cite: 79].</p>
+                    <p>Uso de <code>pickle</code> para almacenamiento binario de vectores pre-calculados (Cerebro)[cite: 79].</p>
                 </div>
                 <div class="card">
                     <h4><i class="fas fa-bolt"></i> Optimización</h4>
-                    [cite_start]<p>Lazy Loading y Vectorización por lotes para manejar restricciones de memoria[cite: 82, 179].</p>
+                    <p>Búsqueda semántica optimizada matricialmente (top_k=1) para respuesta en milisegundos[cite: 96, 97].</p>
                 </div>
             </div>
         </section>
@@ -370,9 +440,9 @@
     </div>
 
     <footer>
-        [cite_start]<p>Proyecto de Inteligencia Artificial - Universidad Andina del Cusco [cite: 1]</p>
-        [cite_start]<p>Equipo: Paz Loaiza Arturo Josue & Quispe Bravo Kelvin Ronny [cite: 12]</p>
-        [cite_start]<p style="margin-top: 1rem;"><a href="https://huggingface.co/spaces/arturop03/limpiador-datos-peru" target="_blank" style="color: var(--primary);">Ver Proyecto en Hugging Face</a> [cite: 165]</p>
+        <p>Proyecto de Inteligencia Artificial - Universidad Andina del Cusco</p>
+        <p>Equipo: Paz Loaiza Arturo Josue & Quispe Bravo Kelvin Ronny [cite: 11]</p>
+        <p style="margin-top: 1rem;"><a href="https://huggingface.co/spaces/arturop03/limpiador-datos-peru" target="_blank" style="color: var(--primary);">Ver Proyecto en Hugging Face</a></p>
     </footer>
 
     <script>
@@ -385,7 +455,7 @@
             // Simulación de delay de red/procesamiento
             setTimeout(() => {
                 let cleanResult = "No encontrado en catálogo (Score < 0.75)";
-                let score = "0.00";
+                let score = "0.45";
 
                 // Lógica simulada basada en ejemplos del documento
                 if (input.toLowerCase().includes("intel") || input.includes("17")) {
@@ -410,7 +480,7 @@
                         </div>
                     </div>
                 `;
-            }, 1500);
+            }, 1000);
         }
     </script>
 </body>
