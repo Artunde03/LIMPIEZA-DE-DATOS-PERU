@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: Estandarizador de Datos RAG</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #3b82f6; /* Azul moderno */
+            --secondary: #10b981; /* Verde éxito */
+            --accent: #f59e0b; /* Naranja/Amarillo */
+            --dark: #0f172a; /* Fondo oscuro */
+            --card-bg: #1e293b; /* Fondo tarjetas */
+            --text: #f8fafc; /* Texto claro */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: -webkit-linear-gradient(#60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--secondary);
+            padding-left: 1rem;
+        }
+
+        /* Cards Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #334155;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Problem vs Solution */
+        .comparison {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .comp-card {
+            flex: 1;
+            padding: 2rem;
+            border-radius: 12px;
+            min-width: 300px;
+        }
+
+        .problem { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; }
+        .solution { background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; }
+
+        /* Architecture Flow */
+        .flow-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .flow-step {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .flow-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: #64748b;
+        }
+
+        /* Metrics */
+        .metric {
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .metric-label {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        /* Interactive Demo */
+        .demo-box {
+            background: #000;
+            border-radius: 10px;
+            padding: 2rem;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #333;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        input {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 5px;
+            border: none;
+            background: #1e293b;
+            color: white;
+            font-family: monospace;
+        }
+
+        button {
+            padding: 0 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button:hover { background: #2563eb; }
+
+        .result-display {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #0f172a;
+            border-left: 3px solid var(--secondary);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        .badge-py { background: #3776AB; color: white; }
+        .badge-hf { background: #FFD21E; color: black; }
+        .badge-pd { background: #150458; color: white; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #020617;
+            color: #64748b;
+            margin-top: 4rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .flow-container { flex-direction: column; }
+            .arrow { transform: rotate(90deg); margin: 10px 0; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="university-badges" style="margin-bottom: 1rem;">
+            <span style="letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; opacity: 0.8;">Universidad Andina del Cusco</span>
+        </div>
+        <h1>Estandarizador de Datos con IA</h1>
+        <p class="subtitle">Una arquitectura RAG para la normalización semántica de registros empresariales.</p>
+        <div style="margin-top: 2rem;">
+            <span class="badge badge-py">Python 3.9+</span>
+            <span class="badge badge-hf">Hugging Face</span>
+            <span class="badge badge-pd">Pandas</span>
+            <span class="badge" style="background:#F25F4C; color:white;">Gradio</span>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section>
+            <div class="comparison">
+                <div class="comp-card problem">
+                    <h3><i class="fas fa-exclamation-triangle"></i> El Problema: "Suciedad"</h3>
+                    [cite_start]<p>Los sistemas ERP reciben entradas manuales inconsistentes que rompen la integridad de datos[cite: 17, 18].</p>
+                    <ul style="margin-top: 1rem; list-style: none;">
+                        <li>❌ "Ryzen 5"</li>
+                        <li>❌ "AMD R5 3600"</li>
+                        <li>❌ "Proc. Ryzen V"</li>
+                    </ul>
+                    [cite_start]<p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Imposibilita el BI y el control de inventarios[cite: 21].</p>
+                </div>
+                <div class="comp-card solution">
+                    <h3><i class="fas fa-check-circle"></i> La Solución: RAG</h3>
+                    [cite_start]<p>Normalización basada en Recuperación Semántica (Retrieval) contra un "Cerebro" validado[cite: 22].</p>
+                    <ul style="margin-top: 1rem; list-style: none;">
+                        <li>✅ "AMD Ryzen 5 3600"</li>
+                        <li>✅ "AMD Ryzen 5 3600"</li>
+                        <li>✅ "AMD Ryzen 5 3600"</li>
+                    </ul>
+                    [cite_start]<p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Recupera la etiqueta oficial sin "alucinar" datos[cite: 27].</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><i class="fas fa-project-diagram"></i> Arquitectura del Sistema</h2>
+            [cite_start]<p style="margin-bottom: 1.5rem;">Utilizamos <strong>Semantic Retrieval</strong> con un modelo Transformer Encoder[cite: 29, 30].</p>
+            
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-icon"><i class="fas fa-file-csv"></i></div>
+                    <strong>1. Input Sucio</strong>
+                    <p style="font-size:0.8rem">"Proc. Intel i7"</p>
+                </div>
+                <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-icon"><i class="fas fa-network-wired"></i></div>
+                    <strong>2. Transformer</strong>
+                    <p style="font-size:0.8rem">Encoding a Vector</p>
+                </div>
+                <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-icon"><i class="fas fa-brain"></i></div>
+                    <strong>3. Cerebro PKL</strong>
+                    <p style="font-size:0.8rem">Búsqueda Vectorial</p>
+                </div>
+                <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-icon"><i class="fas fa-search"></i></div>
+                    <strong>4. Similitud</strong>
+                    <p style="font-size:0.8rem">Comparación Coseno</p>
+                </div>
+                <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step">
+                    <div class="flow-icon"><i class="fas fa-file-excel"></i></div>
+                    <strong>5. Output Limpio</strong>
+                    <p style="font-size:0.8rem">"Intel Core i7 Gen 10"</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><i class="fas fa-chart-bar"></i> Métricas de Desempeño</h2>
+            <div class="grid">
+                <div class="card metric">
+                    <div class="metric-value">94%</div>
+                    <div class="metric-label">Precisión (Accuracy)</div>
+                    [cite_start]<p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">En identificación de variantes[cite: 175].</p>
+                </div>
+                <div class="card metric">
+                    <div class="metric-value">4.5s</div>
+                    <div class="metric-label">Velocidad</div>
+                    [cite_start]<p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Por cada 1,000 registros procesados[cite: 179].</p>
+                </div>
+                <div class="card metric">
+                    <div class="metric-value">0.75</div>
+                    <div class="metric-label">Umbral Óptimo</div>
+                    [cite_start]<p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Balance ideal entre precisión y falsos positivos[cite: 172].</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><i class="fas fa-laptop-code"></i> Demostración del Algoritmo</h2>
+            [cite_start]<p style="margin-bottom: 1rem;">Prueba la lógica de normalización basada en los ejemplos del documento[cite: 47, 61].</p>
+            
+            <div class="demo-box">
+                <div class="input-group">
+                    <input type="text" id="dirtyInput" value="Proc. Intel 17" placeholder="Escribe un producto sucio...">
+                    <button onclick="simulateClean()">Normalizar</button>
+                </div>
+                <div class="result-display" id="resultArea">
+                    <span style="color: #64748b;">Esperando input...</span>
+                </div>
+                <div style="margin-top: 1rem; font-size: 0.8rem; color: #64748b;">
+                    [cite_start]<i class="fas fa-info-circle"></i> Modelo: sentence-transformers/paraphrase-multilingual-mpnet-base-v2 [cite: 31]
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><i class="fas fa-layer-group"></i> Stack Tecnológico</h2>
+            <div class="grid">
+                <div class="card">
+                    <h4><i class="fab fa-python"></i> Core</h4>
+                    [cite_start]<p>Python 3.9+ priorizando eficiencia de memoria[cite: 74, 76].</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-database"></i> Serialización</h4>
+                    [cite_start]<p>Uso de <code>pickle</code> para almacenamiento binario de vectores pre-calculados (Cerebro)[cite: 79].</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-bolt"></i> Optimización</h4>
+                    [cite_start]<p>Lazy Loading y Vectorización por lotes para manejar restricciones de memoria[cite: 82, 179].</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        [cite_start]<p>Proyecto de Inteligencia Artificial - Universidad Andina del Cusco [cite: 1]</p>
+        [cite_start]<p>Equipo: Paz Loaiza Arturo Josue & Quispe Bravo Kelvin Ronny [cite: 12]</p>
+        [cite_start]<p style="margin-top: 1rem;"><a href="https://huggingface.co/spaces/arturop03/limpiador-datos-peru" target="_blank" style="color: var(--primary);">Ver Proyecto en Hugging Face</a> [cite: 165]</p>
+    </footer>
+
+    <script>
+        function simulateClean() {
+            const input = document.getElementById('dirtyInput').value;
+            const output = document.getElementById('resultArea');
+            
+            output.innerHTML = '<span style="color: var(--accent);"><i class="fas fa-spinner fa-spin"></i> Vectorizando y buscando en Cerebro PKL...</span>';
+            
+            // Simulación de delay de red/procesamiento
+            setTimeout(() => {
+                let cleanResult = "No encontrado en catálogo (Score < 0.75)";
+                let score = "0.00";
+
+                // Lógica simulada basada en ejemplos del documento
+                if (input.toLowerCase().includes("intel") || input.includes("17")) {
+                    cleanResult = "Intel Core i7 Gen 10";
+                    score = "0.89";
+                } else if (input.toLowerCase().includes("ryzen")) {
+                    cleanResult = "AMD Ryzen 5 3600";
+                    score = "0.92";
+                } else if (input.toLowerCase().includes("gaseosa") || input.toLowerCase().includes("refresco")) {
+                    cleanResult = "Refresco 3 Litros";
+                    score = "0.85";
+                }
+
+                output.innerHTML = `
+                    <div style="width: 100%">
+                        <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.2rem;">Resultado Oficial (Corpus Match):</div>
+                        <div style="font-size: 1.2rem; color: var(--secondary); font-weight: bold;">
+                            <i class="fas fa-check"></i> ${cleanResult}
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--accent); margin-top: 0.5rem;">
+                            Similitud Coseno: ${score}
+                        </div>
+                    </div>
+                `;
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
